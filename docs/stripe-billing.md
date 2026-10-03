@@ -18,3 +18,15 @@ Sentinel CTAs read NEXT_PUBLIC_SENTINEL_SOLO_CHECKOUT_URL / TEAMS / SOVEREIGN. U
 
 ## Not yet verified
 Real Stripe test-mode checkout to webhook to key use needs connected Stripe account + deployed public webhook URL. Local tests cover config, 503 without key, signed webhook provisioning, one-time reveal.
+
+## Live Stripe products (created 2026-10-03, livemode, account Axiom Zeta Innovations)
+- Solo (Developer): product prod_VNIc337H86SRDm, price price_1UMY18RuE1b4AX4JxsdLRHvy, $59.99/month
+- Teams: product prod_VNIc0oTpCnDoZf, price price_1UMY1DRuE1b4AX4JmwRcBpo0, $89.99/month
+- Sovereign: product prod_VNIcYDpE4Mp4Vs, price price_1UMY1NRuE1b4AX4JPCI5qFw7, $119.99/month
+Set gateway env STRIPE_PRICE_SOLO / STRIPE_PRICE_TEAMS / STRIPE_PRICE_SOVEREIGN to these price IDs. These are LIVE prices (not test mode).
+
+## Payment Links (live, created 2026-10-03)
+- Solo $59.99: https://buy.stripe.com/dRm6oJ8cw6AT3oa1KF18c0a (plink_1UMY39RuE1b4AX4Jr8d6aUTY)
+- Teams $89.99: https://buy.stripe.com/3cI6oJ0K48J12k6ahb18c0b (plink_1UMY3ARuE1b4AX4JlLlGzN7k)
+- Sovereign $119.99: https://buy.stripe.com/8x24gB64o2kDe2O3SN18c0c (plink_1UMY3CRuE1b4AX4JQCy6JU3C)
+Site defaults to these; NEXT_PUBLIC_SENTINEL_*_CHECKOUT_URL overrides.
