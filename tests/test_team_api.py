@@ -55,7 +55,7 @@ def test_team_api_key_management_and_audit(client):
     )
     assert create_key.status_code == 200
     key_body = create_key.json()
-    assert key_body["api_key"].startswith("adk_")
+    assert key_body["api_key"].startswith("azs_")
     key_id = key_body["key_id"]
 
     keys_before = client.get(f"/v1/team/workspaces/{workspace_id}/api-keys", headers=_auth("owner-2"))

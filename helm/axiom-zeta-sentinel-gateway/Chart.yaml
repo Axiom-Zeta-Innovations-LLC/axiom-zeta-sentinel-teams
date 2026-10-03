@@ -1,0 +1,6 @@
+apiVersion: v2
+name: axiom-zeta-sentinel-teams
+description: Helm chart for the axiom-zeta-sentinel drift prevention gateway
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

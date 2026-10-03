@@ -13,7 +13,7 @@ import pytest
 SCRIPT = textwrap.dedent(
     """
     import json, random
-    from axiom_drift_core import DriftEngine
+    from axiom_zeta_sentinel_core import DriftEngine
 
     def run(seed, windows):
         e = DriftEngine(18, 18, 10, seed)
@@ -45,7 +45,7 @@ def _run():
 def test_real_engine_behaviour():
     proc = _run()
     if proc.returncode != 0:
-        if "No module named 'axiom_drift_core'" in proc.stderr and os.getenv("REQUIRE_REAL_ENGINE") != "1":
+        if "No module named 'axiom_zeta_sentinel_core'" in proc.stderr and os.getenv("REQUIRE_REAL_ENGINE") != "1":
             pytest.skip("Rust extension not built (run: cd rust && maturin develop --release)")
         pytest.fail(proc.stderr)
 

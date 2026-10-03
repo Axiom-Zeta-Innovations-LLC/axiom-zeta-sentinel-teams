@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "axiom-drift-teams"
+name = "axiom-zeta-sentinel-teams"
 version = "0.1.0"
 description = "FastAPI gateway for HRM manifold-surgery drift stabilization"
 requires-python = ">=3.10"
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-axiom-drift-teams = "gateway.cli:main"
+axiom-zeta-sentinel-teams = "gateway.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

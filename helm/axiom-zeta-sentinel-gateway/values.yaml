@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/anthonyrenecastro-create/axiom-drift-teams
+  repository: ghcr.io/anthonyrenecastro-create/axiom-zeta-sentinel-teams
   tag: latest
   pullPolicy: IfNotPresent
 

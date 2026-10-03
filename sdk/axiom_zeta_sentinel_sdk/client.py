@@ -9,7 +9,7 @@ from .types import FeedbackResponse, StabilizeResponse, TelemetryResponse
 
 
 @dataclass
-class AxiomDriftClient:
+class AxiomZetaSentinelClient:
     base_url: str = "http://127.0.0.1:8000"
     api_key: str | None = None
     timeout_seconds: float = 20.0

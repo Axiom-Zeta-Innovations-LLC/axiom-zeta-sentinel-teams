@@ -24,7 +24,7 @@ ROLE_RANK: dict[Role, int] = {
 }
 
 
-DEFAULT_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/axiomdrift"
+DEFAULT_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/axiomzetasentinel"
 
 
 def utc_now() -> datetime:
@@ -318,7 +318,7 @@ class InMemoryTeamStore:
             if workspace is None:
                 raise KeyError("Workspace not found")
 
-            raw_key = "adk_" + token_urlsafe(24)
+            raw_key = "azs_" + token_urlsafe(24)
             record = ApiKeyRecord(
                 key_id=self._id("key"),
                 workspace_id=workspace_id,
@@ -804,7 +804,7 @@ class PostgresTeamStore:
         )
 
     def create_api_key(self, workspace_id: str, actor_user_id: str, name: str) -> tuple[ApiKeyRecord, str]:
-        raw_key = "adk_" + token_urlsafe(24)
+        raw_key = "azs_" + token_urlsafe(24)
         key_id = self._id("key")
         with self._conn() as conn:
             with conn.cursor() as cur:

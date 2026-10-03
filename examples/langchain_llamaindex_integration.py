@@ -1,4 +1,4 @@
-"""LangChain/LlamaIndex integration example for Axiom Drift gateway.
+"""LangChain/LlamaIndex integration example for Axiom Zeta Sentinel gateway.
 
 This script demonstrates where drift stabilization is inserted in a RAG flow:
 1) build retrieval context
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from axiom_drift_sdk import AxiomDriftClient
+from axiom_zeta_sentinel_sdk import AxiomZetaSentinelClient
 
 
 def build_metric_window(raw_scores: list[float]) -> list[float]:
@@ -24,7 +24,7 @@ def build_metric_window(raw_scores: list[float]) -> list[float]:
 
 
 def stabilize_query(
-    client: AxiomDriftClient,
+    client: AxiomZetaSentinelClient,
     tenant_id: str,
     request_id: str,
     text: str,
@@ -56,7 +56,7 @@ def policy_route(actions: list[str]) -> str:
 
 def langchain_style_example() -> None:
     """Pseudo-flow for LangChain Runnable graph integration."""
-    client = AxiomDriftClient(base_url="http://127.0.0.1:8000", api_key="replace-me")
+    client = AxiomZetaSentinelClient(base_url="http://127.0.0.1:8000", api_key="replace-me")
     query = "Summarize current churn anomalies"
     embedding = [0.03, -0.02, 0.06, 0.01]
     retriever_scores = [0.62, 0.58, 0.55, 0.61, 0.47, 0.53, 0.65, 0.6]
@@ -76,7 +76,7 @@ def langchain_style_example() -> None:
 
 def llamaindex_style_example() -> None:
     """Pseudo-flow for LlamaIndex QueryEngine post-retrieval hook."""
-    client = AxiomDriftClient(base_url="http://127.0.0.1:8000", api_key="replace-me")
+    client = AxiomZetaSentinelClient(base_url="http://127.0.0.1:8000", api_key="replace-me")
     query = "What changed in payment-failure root causes this week?"
     embedding = [0.01, 0.02, -0.05, 0.04]
     retriever_scores = [0.42, 0.4, 0.38, 0.36, 0.49, 0.44, 0.41, 0.37]

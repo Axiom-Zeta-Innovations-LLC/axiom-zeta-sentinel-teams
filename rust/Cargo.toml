@@ -1,10 +1,10 @@
 [package]
-name = "axiom_drift_core"
+name = "axiom_zeta_sentinel_core"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "axiom_drift_core"
+name = "axiom_zeta_sentinel_core"
 crate-type = ["cdylib"]
 
 [dependencies]

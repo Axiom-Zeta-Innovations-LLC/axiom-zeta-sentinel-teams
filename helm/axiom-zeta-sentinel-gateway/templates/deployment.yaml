@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: axiom-drift-teams
+  name: axiom-zeta-sentinel-teams
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: axiom-drift-teams
+      app: axiom-zeta-sentinel-teams
   template:
     metadata:
       labels:
-        app: axiom-drift-teams
+        app: axiom-zeta-sentinel-teams
     spec:
       containers:
         - name: gateway

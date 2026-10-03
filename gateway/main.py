@@ -4,7 +4,7 @@ from gateway.api.routes_team import router as team_router
 from gateway.api.routes_stabilize import router as stabilize_router
 from gateway.core.config import load_settings
 
-app = FastAPI(title="Axiom Drift Teams Gateway", version="0.1.0")
+app = FastAPI(title="Axiom Zeta Sentinel Teams Gateway", version="0.1.0")
 app.include_router(stabilize_router)
 app.include_router(team_router)
 settings = load_settings()

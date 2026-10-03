@@ -1,16 +1,16 @@
 version: "3.9"
 
 services:
-  axiom-drift-teams:
+  axiom-zeta-sentinel-teams:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: axiom-drift-teams
+    container_name: axiom-zeta-sentinel-teams
     env_file:
       - .env
     environment:
       TEAM_STORE_BACKEND: ${TEAM_STORE_BACKEND:-postgres}
-      DATABASE_URL: ${DATABASE_URL:-postgresql://axiom_drift:axiom_drift@postgres:5432/axiom_drift}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://axiom_zeta_sentinel:axiom_zeta_sentinel@postgres:5432/axiom_zeta_sentinel}
     ports:
       - "8000:8000"
     depends_on:
@@ -25,21 +25,21 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: axiom-drift-teams-postgres
+    container_name: axiom-zeta-sentinel-teams-postgres
     environment:
-      POSTGRES_USER: axiom_drift
-      POSTGRES_PASSWORD: axiom_drift
-      POSTGRES_DB: axiom_drift
+      POSTGRES_USER: axiom_zeta_sentinel
+      POSTGRES_PASSWORD: axiom_zeta_sentinel
+      POSTGRES_DB: axiom_zeta_sentinel
     ports:
       - "5432:5432"
     volumes:
-      - axiom_drift_teams_pg:/var/lib/postgresql/data
+      - axiom_zeta_sentinel_teams_pg:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U axiom_drift -d axiom_drift"]
+      test: ["CMD-SHELL", "pg_isready -U axiom_zeta_sentinel -d axiom_zeta_sentinel"]
       interval: 5s
       timeout: 3s
       retries: 10
     restart: unless-stopped
 
 volumes:
-  axiom_drift_teams_pg:
+  axiom_zeta_sentinel_teams_pg:

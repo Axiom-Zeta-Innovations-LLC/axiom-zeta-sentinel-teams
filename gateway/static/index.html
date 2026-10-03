@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Axiom Drift Teams — Drift Prevention Gateway</title>
+<title>Axiom Zeta Sentinel Teams — Drift Prevention Gateway</title>
 <style>
 :root{--bg:#0b1220;--card:#111a2e;--mut:#8ea0b8;--txt:#e8eef6;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--accent:#38bdf8}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
@@ -15,13 +15,13 @@ button.secondary{background:#1e2a44;color:var(--txt)}.row{display:flex;gap:8px;f
 .score{font-size:42px;font-weight:800}.json{background:#0b1220;border:1px solid #1e2a44;border-radius:8px;padding:10px;overflow:auto;max-height:320px;font-size:12px;white-space:pre-wrap}
 table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid #1e2a44;padding:6px;text-align:left}canvas{width:100%;height:140px;background:#0b1220;border-radius:8px}.note{color:var(--mut);font-size:12px}.chip{background:#1e2a44;padding:4px 8px;border-radius:999px;font-size:12px}
 </style></head><body>
-<header><div><h1>Axiom Drift Teams</h1><div class="sub">LLM / RAG drift prevention gateway — bounded 24-D stabilized vector, drift score &amp; policy actions. GUI at <code>/ui</code>, API at <code>/v1</code>.</div></div><span id="healthBadge" class="chip">health: unknown</span></header>
+<header><div><h1>Axiom Zeta Sentinel Teams</h1><div class="sub">LLM / RAG drift prevention gateway — bounded 24-D stabilized vector, drift score &amp; policy actions. GUI at <code>/ui</code>, API at <code>/v1</code>.</div></div><span id="healthBadge" class="chip">health: unknown</span></header>
 <main>
 <section class="card"><h2>Connection</h2><div class="grid">
 <label>API key (X-API-Key)<input id="apiKey" type="password" placeholder="GATEWAY_API_KEY"></label>
 <label>Tenant ID<input id="tenantId" value="acme"></label>
 <label>Request ID<input id="requestId"></label>
-<label>Workspace Key ID<input id="wsKeyId" placeholder="adk key id"></label><label>Workspace Key Secret<input id="wsKey" type="password" placeholder="adk_... secret shown once on create"></label><label>User ID (X-User-Id)<input id="userId" value="owner@example.com"></label><label>User signing secret<input id="signSecret" type="password" placeholder="USER_ID_SIGNING_SECRET (optional)"></label>
+<label>Workspace Key ID<input id="wsKeyId" placeholder="adk key id"></label><label>Workspace Key Secret<input id="wsKey" type="password" placeholder="azs_... secret shown once on create"></label><label>User ID (X-User-Id)<input id="userId" value="owner@example.com"></label><label>User signing secret<input id="signSecret" type="password" placeholder="USER_ID_SIGNING_SECRET (optional)"></label>
 </div><p class="note">Keys are kept only in this browser tab (not sent anywhere except your gateway). Workspace keys can be used instead of the gateway key for stabilize calls.</p></section>
 
 <section class="card"><h2>Stabilize</h2>
