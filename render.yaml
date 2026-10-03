@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: axiom-zeta-sentinel-teams
+    runtime: docker
+    plan: free
+    healthCheckPath: /v1/health
+    envVars:
+      - key: GATEWAY_API_KEY
+        generateValue: true
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRICE_SOLO
+        value: price_1UMY18RuE1b4AX4JxsdLRHvy
+      - key: STRIPE_PRICE_TEAMS
+        value: price_1UMY1DRuE1b4AX4JmwRcBpo0
+      - key: STRIPE_PRICE_SOVEREIGN
+        value: price_1UMY1NRuE1b4AX4JPCI5qFw7
+      - key: TEAM_STORE_BACKEND
+        value: memory
