@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 
 from gateway.api.routes_team import router as team_router
+from gateway.api.routes_billing import router as billing_router
 from gateway.api.routes_stabilize import router as stabilize_router
 from gateway.core.config import load_settings
 
 app = FastAPI(title="Axiom Zeta Sentinel Teams Gateway", version="0.1.0")
 app.include_router(stabilize_router)
+app.include_router(billing_router)
 app.include_router(team_router)
 settings = load_settings()
 
