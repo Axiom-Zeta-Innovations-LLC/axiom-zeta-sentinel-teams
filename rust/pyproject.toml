@@ -1,0 +1,13 @@
+[build-system]
+requires = ["maturin>=1.5,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "axiom-drift-core"
+version = "0.1.0"
+description = "Rust core for axiom-drift drift prevention gateway"
+requires-python = ">=3.10"
+
+[tool.maturin]
+module-name = "axiom_drift_core"
+features = ["pyo3/extension-module"]

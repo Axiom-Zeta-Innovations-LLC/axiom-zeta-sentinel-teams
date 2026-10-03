@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axiom Drift Teams — Drift Prevention Gateway</title>
+<style>
+:root{--bg:#0b1220;--card:#111a2e;--mut:#8ea0b8;--txt:#e8eef6;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--accent:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:20px 24px;border-bottom:1px solid #1e2a44;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+h1{margin:0;font-size:22px}h2{margin:0 0 12px;font-size:16px}.sub{color:var(--mut);font-size:13px}
+main{max-width:1100px;margin:0 auto;padding:20px;display:grid;gap:16px}
+.card{background:var(--card);border:1px solid #1e2a44;border-radius:12px;padding:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;align-items:end}
+label{display:grid;gap:6px;font-size:12px;color:var(--mut)}input,textarea,select{background:#0b1220;border:1px solid #2a3a5c;color:var(--txt);border-radius:8px;padding:9px;font:inherit;font-size:13px}
+textarea{width:100%;min-height:90px}button,.btnlink{background:var(--accent);color:#04121f;border:0;border-radius:8px;padding:9px 14px;font-weight:600;cursor:pointer;text-decoration:none;text-align:center;font-size:13px}
+button.secondary{background:#1e2a44;color:var(--txt)}.row{display:flex;gap:8px;flex-wrap:wrap}
+.badge{padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px}.green{background:var(--green);color:#052e12}.yellow{background:var(--yellow);color:#3a2e04}.red{background:var(--red);color:#fff}
+.score{font-size:42px;font-weight:800}.json{background:#0b1220;border:1px solid #1e2a44;border-radius:8px;padding:10px;overflow:auto;max-height:320px;font-size:12px;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid #1e2a44;padding:6px;text-align:left}canvas{width:100%;height:140px;background:#0b1220;border-radius:8px}.note{color:var(--mut);font-size:12px}.chip{background:#1e2a44;padding:4px 8px;border-radius:999px;font-size:12px}
+</style></head><body>
+<header><div><h1>Axiom Drift Teams</h1><div class="sub">LLM / RAG drift prevention gateway — bounded 24-D stabilized vector, drift score &amp; policy actions. GUI at <code>/ui</code>, API at <code>/v1</code>.</div></div><span id="healthBadge" class="chip">health: unknown</span></header>
+<main>
+<section class="card"><h2>Connection</h2><div class="grid">
+<label>API key (X-API-Key)<input id="apiKey" type="password" placeholder="GATEWAY_API_KEY"></label>
+<label>Tenant ID<input id="tenantId" value="acme"></label>
+<label>Request ID<input id="requestId"></label>
+<label>Workspace Key ID<input id="wsKeyId" placeholder="adk key id"></label><label>Workspace Key Secret<input id="wsKey" type="password" placeholder="adk_... secret shown once on create"></label><label>User ID (X-User-Id)<input id="userId" value="owner@example.com"></label><label>User signing secret<input id="signSecret" type="password" placeholder="USER_ID_SIGNING_SECRET (optional)"></label>
+</div><p class="note">Keys are kept only in this browser tab (not sent anywhere except your gateway). Workspace keys can be used instead of the gateway key for stabilize calls.</p></section>
+
+<section class="card"><h2>Stabilize</h2>
+<div class="row"><button data-gen="stable" class="secondary">Stable stream</button><button data-gen="shift1" class="secondary">Mean shift +1σ</button><button data-gen="shift3" class="secondary">Mean shift +3σ</button><button data-gen="noise" class="secondary">Noise burst</button><button data-gen="rescale" class="secondary">Rescale ×100</button></div>
+<label style="margin-top:10px">Metric window (≥24 numbers, comma or space separated)<textarea id="metricWindow"></textarea></label>
+<label>Embedding (optional, comma separated)<textarea id="embedding" style="min-height:50px">0.01,-0.02,0.03,0.04</textarea></label>
+<div class="row" style="margin-top:10px"><button id="btnStabilize">Run Stabilize</button><button id="btnReset" class="secondary">Reset Baseline</button><button id="btnFeedback" class="secondary">Send Feedback (corrected)</button><button id="btnTelemetry" class="secondary">Refresh Telemetry</button></div>
+<div class="grid" style="margin-top:14px"><div><div class="sub">Drift score</div><div class="score" id="driftScore">—</div></div><div><div class="sub">Risk</div><span id="riskBadge" class="badge green">—</span><div id="actions" class="row" style="margin-top:8px"></div></div></div>
+<canvas id="vecChart" width="1000" height="140"></canvas>
+<h3 style="font-size:14px">Diagnostics</h3><div id="diagTable"></div>
+<details><summary>Raw response</summary><pre id="rawOut" class="json"></pre></details>
+</section>
+<section class="card"><h2>Telemetry</h2><pre id="telemetryOut" class="json">Not loaded yet.</pre></section>
+
+<section class="card"><h2>Organization & Workspaces</h2>
+<div class="grid">
+<label>Org name<input id="orgName" value="Acme AI"></label>
+<button id="btnCreateOrg">Create Org</button>
+<label>Org ID<input id="orgId" placeholder="org_..."></label>
+<label>Add member user ID<input id="memberUser" placeholder="user@example.com"></label>
+<label>Role<select id="memberRole"><option>viewer</option><option>analyst</option><option selected>admin</option><option>owner</option></select></label>
+<button id="btnAddMember">Add / Update Member</button>
+<button id="btnListMembers">List Members</button>
+<label>Workspace name<input id="wsName" value="Production RAG"></label>
+<button id="btnCreateWs">Create Workspace</button>
+<label>Workspace ID<input id="wsId" placeholder="wsp_..."></label>
+<label>API key name<input id="keyName" value="gui-key"></label>
+<button id="btnCreateKey">Create API Key</button>
+<button id="btnListKeys">List API Keys</button>
+<button id="btnAudit">View Audit</button>
+<button id="btnAnalytics">Workspace Analytics</button>
+<button id="btnTeamActivity">Team Activity</button>
+</div><pre id="teamOut" class="json"></pre></section>
+
+<section class="card"><h2>MVP notes</h2><p class="note">Baseline learns over the first 5 windows per tenant, then drift = 0.65×baseline + 0.35×HRM. No token-counting/trimming is built yet — do not claim token savings. <code>text</code> is accepted but not used by the engine. Typical latency ~150ms/call. See README &amp; CHANGES.md.</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+$('requestId').value='req-'+Date.now();
+function headers(){const h={'Content-Type':'application/json'};const k=$('apiKey').value.trim();if(k)h['X-API-Key']=k;const wid=$('wsKeyId')?.value.trim(),wk=$('wsKey')?.value.trim();if(wid&&wk){h['X-Workspace-Key-Id']=wid;h['X-Workspace-Key']=wk;}const u=$('userId')?.value.trim();if(u)h['X-User-Id']=u;return h;}
+async function signHeaders(){const h=headers();const secret=$('signSecret')?.value;const uid=$('userId')?.value.trim();if(secret&&uid&&crypto?.subtle){const enc=new TextEncoder();const key=await crypto.subtle.importKey('raw',enc.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);const sig=await crypto.subtle.sign('HMAC',key,enc.encode(uid));h['X-User-Signature']=[...new Uint8Array(sig)].map(b=>b.toString(16).padStart(2,'0')).join('');}return h;}
+function parseNums(s){return s.split(/[\s,]+/).filter(Boolean).map(Number).filter(n=>!Number.isNaN(n));}
+function gen(kind){const n=24;let a=[];if(kind==='stable')a=Array.from({length:n},(_,i)=>0.25+0.03*Math.sin(i/3));if(kind==='shift1')a=Array.from({length:n},()=>0.85+Math.random()*0.05);if(kind==='shift3')a=Array.from({length:n},()=>1.6+Math.random()*0.05);if(kind==='noise')a=Array.from({length:n},()=>Math.random()*1.4);if(kind==='rescale')a=Array.from({length:n},(_,i)=>(0.25+0.03*Math.sin(i/3))*100);$('metricWindow').value=a.map(x=>x.toFixed(4)).join(', ');}
+document.querySelectorAll('[data-gen]').forEach(b=>b.onclick=()=>gen(b.dataset.gen));gen('stable');
+function drawVec(vec){const c=$('vecChart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(!vec)return;const mid=c.height/2;ctx.strokeStyle='#2a3a5c';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(c.width,mid);ctx.stroke();const w=c.width/vec.length;vec.forEach((v,i)=>{const h=Math.max(-1,Math.min(1,v))*mid*0.9;ctx.fillStyle=v>=0?'#38bdf8':'#f97316';ctx.fillRect(i*w+2,mid-Math.max(h,0),w-4,Math.abs(h)||2);});}
+async function call(path,opts={}){const res=await fetch(path,opts);const txt=await res.text();let j;try{j=JSON.parse(txt)}catch{j=txt}if(!res.ok)throw new Error((j?.detail||txt||res.status));return j;}
+$('btnStabilize').onclick=async()=>{try{const payload={tenant_id:$('tenantId').value,request_id:$('requestId').value,metric_window:parseNums($('metricWindow').value),embedding:parseNums($('embedding').value),metadata:{source:'gui',step_cap:96}};const ws=$('wsId')?.value.trim();if(ws)payload.workspace_id=ws;const out=await call('/v1/stabilize',{method:'POST',headers:await signHeaders(),body:JSON.stringify(payload)});$('driftScore').textContent=Number(out.drift_score).toFixed(3);const b=$('riskBadge');b.textContent=out.risk_level;b.className='badge '+out.risk_level;$('actions').innerHTML=(out.actions||[]).map(a=>'<span class="chip">'+a+'</span>').join('');drawVec(out.stabilized_vector);$('diagTable').innerHTML='<table>'+Object.entries(out.diagnostics||{}).map(([k,v])=>'<tr><td>'+k+'</td><td>'+Number(v).toFixed(5)+'</td></tr>').join('')+'</table>';$('rawOut').textContent=JSON.stringify(out,null,2);$('requestId').value='req-'+Date.now();}catch(e){$('rawOut').textContent='Error: '+e.message}};
+$('btnReset').onclick=async()=>{try{const out=await call('/v1/baseline/reset',{method:'POST',headers:await signHeaders(),body:JSON.stringify({tenant_id:$('tenantId').value,workspace_id:$('wsId')?.value.trim()||undefined})});$('rawOut').textContent=JSON.stringify(out,null,2);alert('Baseline reset');}catch(e){alert(e.message)}};
+$('btnFeedback').onclick=async()=>{try{const out=await call('/v1/feedback',{method:'POST',headers:await signHeaders(),body:JSON.stringify({tenant_id:$('tenantId').value,request_id:$('requestId').value,corrected:true,correction_score:1.0,workspace_id:$('wsId')?.value.trim()||undefined})});$('rawOut').textContent=JSON.stringify(out,null,2);}catch(e){alert(e.message)}};
+$('btnTelemetry').onclick=async()=>{try{$('telemetryOut').textContent=JSON.stringify(await call('/v1/telemetry',{headers:await signHeaders()}),null,2);}catch(e){$('telemetryOut').textContent='Error: '+e.message}};
+async function health(){try{const h=await call('/v1/health');$('healthBadge').textContent='health: '+h.status;const so=$('sovOut');if(so)so.textContent=JSON.stringify(h,null,2);}catch(e){$('healthBadge').textContent='health: error'}}health();
+</script>

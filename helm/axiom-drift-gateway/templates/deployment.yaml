@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: axiom-drift-teams
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: axiom-drift-teams
+  template:
+    metadata:
+      labels:
+        app: axiom-drift-teams
+    spec:
+      containers:
+        - name: gateway
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            - name: DETERMINISTIC_MODE
+              value: "{{ .Values.env.deterministicMode }}"
+            - name: DRIFT_SPIKE_THRESHOLD
+              value: "{{ .Values.env.driftSpikeThreshold }}"
+            - name: DRIFT_BREAKER_TRIP_COUNT
+              value: "{{ .Values.env.breakerTripCount }}"
+            - name: MAX_METRIC_WINDOW
+              value: "{{ .Values.env.maxMetricWindow }}"
+            - name: MAX_COMPUTE_STEPS
+              value: "{{ .Values.env.maxComputeSteps }}"
+            - name: GATEWAY_API_KEY
+              value: "{{ .Values.env.gatewayApiKey }}"
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}

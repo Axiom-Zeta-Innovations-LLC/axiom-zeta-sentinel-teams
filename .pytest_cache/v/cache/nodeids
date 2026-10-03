@@ -1,0 +1,22 @@
+[
+  "tests/test_api_integration.py::test_api_key_enforced_when_configured",
+  "tests/test_api_integration.py::test_feedback_and_telemetry_collect_slos",
+  "tests/test_api_integration.py::test_stabilize_requires_text_or_embedding",
+  "tests/test_api_integration.py::test_stabilize_returns_contract_shape",
+  "tests/test_hardening.py::test_engine_state_is_namespaced_per_workspace",
+  "tests/test_hardening.py::test_gateway_fails_closed_without_key",
+  "tests/test_hardening.py::test_revoked_key_rejected",
+  "tests/test_hardening.py::test_signed_user_ids_required_when_secret_set",
+  "tests/test_hardening.py::test_tenant_limit_returns_429",
+  "tests/test_hardening.py::test_unsigned_user_ids_refused_by_default",
+  "tests/test_hardening.py::test_workspace_key_cannot_target_another_workspace",
+  "tests/test_hardening.py::test_workspace_key_id_alone_is_not_a_credential",
+  "tests/test_real_engine.py::test_real_engine_behaviour",
+  "tests/test_replay_integration.py::test_replay_harness_handles_empty_input",
+  "tests/test_replay_integration.py::test_replay_harness_reports_totals",
+  "tests/test_team_api.py::test_team_api_key_management_and_audit",
+  "tests/test_team_api.py::test_team_org_workspace_and_member_flow",
+  "tests/test_team_api.py::test_team_requires_user_header",
+  "tests/test_workspace_analytics.py::test_stabilize_rejects_mismatched_workspace_attribution",
+  "tests/test_workspace_analytics.py::test_workspace_scoped_runtime_attribution_and_analytics"
+]

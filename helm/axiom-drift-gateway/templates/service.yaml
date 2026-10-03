@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: axiom-drift-teams
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: axiom-drift-teams
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http

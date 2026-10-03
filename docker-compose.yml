@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  axiom-drift-teams:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: axiom-drift-teams
+    env_file:
+      - .env
+    environment:
+      TEAM_STORE_BACKEND: ${TEAM_STORE_BACKEND:-postgres}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://axiom_drift:axiom_drift@postgres:5432/axiom_drift}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/v1/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: axiom-drift-teams-postgres
+    environment:
+      POSTGRES_USER: axiom_drift
+      POSTGRES_PASSWORD: axiom_drift
+      POSTGRES_DB: axiom_drift
+    ports:
+      - "5432:5432"
+    volumes:
+      - axiom_drift_teams_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U axiom_drift -d axiom_drift"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  axiom_drift_teams_pg:
