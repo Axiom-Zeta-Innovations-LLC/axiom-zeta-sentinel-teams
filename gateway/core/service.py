@@ -2,7 +2,10 @@ from typing import Any
 from dataclasses import dataclass, field
 from threading import Lock
 
-from axiom_zeta_sentinel_core import DriftEngine
+try:
+    from axiom_zeta_sentinel_core import DriftEngine
+except ImportError:  # MVP deploy without Rust toolchain
+    from gateway.core.fallback_engine import DriftEngine
 
 from gateway.core.config import GatewaySettings, load_settings
 from gateway.core.policy import actions_for_risk, classify_risk, enforce_circuit_breaker
