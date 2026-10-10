@@ -296,3 +296,15 @@ A full single-page GUI is bundled at `gateway/static/index.html` and served by t
 - Teams adds org/workspace/API-key/audit/analytics panels. Sovereign adds health/OIDC/session/policy status.
 
 No separate frontend build is required.
+
+## License
+
+Copyright (C) 2026 Axiom Zeta Innovations LLC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, version 3 of the License.
+
+See [LICENSE](LICENSE) for the full text. If you run this software on a
+server and let others interact with it over a network, the AGPL requires you
+to offer those users the corresponding source code.

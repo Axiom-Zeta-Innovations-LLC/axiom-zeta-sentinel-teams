@@ -57,7 +57,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px
 </div><pre id="teamOut" class="json"></pre></section>
 
 
-<section class="card"><h2>Billing — Stripe (auto API key)</h2><div class="grid"><label>Email<input id="billEmail" type="email" placeholder="you@company.com"></label><label>Tier<select id="billTier"><option>solo</option><option>teams</option><option>sovereign</option></select></label><button id="btnCheckout">Checkout with Stripe</button><label>Checkout session ID<input id="billSession" placeholder="cs_..."></label><button id="btnBillSession" class="secondary">Get my API key</button></div><pre id="billOut" class="json">Checkout provisions your API key automatically via webhook. Key is shown once.</pre></section>
+
 <section class="card"><h2>MVP notes</h2><p class="note">Baseline learns over the first 5 windows per tenant, then drift = 0.65×baseline + 0.35×HRM. No token-counting/trimming is built yet — do not claim token savings. <code>text</code> is accepted but not used by the engine. Typical latency ~150ms/call. See README &amp; CHANGES.md.</p></section>
 </main>
 <script>
