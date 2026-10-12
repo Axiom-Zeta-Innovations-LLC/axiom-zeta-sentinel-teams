@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Rust toolchain (needed for maturin to build the engine)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 COPY requirements-dev.txt /app/requirements-dev.txt
 RUN python -m pip install --upgrade pip && python -m pip install -r /app/requirements-dev.txt
 
