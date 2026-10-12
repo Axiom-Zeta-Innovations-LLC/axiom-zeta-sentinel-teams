@@ -16,7 +16,7 @@ COPY requirements-dev.txt /app/requirements-dev.txt
 RUN python -m pip install --upgrade pip && python -m pip install -r /app/requirements-dev.txt
 
 COPY rust /app/rust
-RUN python -m pip install maturin && (cd /app/rust && maturin develop --release || echo 'Rust engine build failed, using Python fallback engine')
+RUN python -m pip install maturin && cd /app/rust && maturin develop --release && python -c "import axiom_zeta_sentinel_core; print('Rust engine OK:', axiom_zeta_sentinel_core.__name__)"
 
 COPY gateway /app/gateway
 COPY README.md /app/README.md
