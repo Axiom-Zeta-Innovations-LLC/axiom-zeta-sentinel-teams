@@ -20,7 +20,7 @@ COPY requirements-dev.txt /app/requirements-dev.txt
 RUN python -m pip install --upgrade pip && python -m pip install -r /app/requirements-dev.txt
 
 COPY rust /app/rust
-RUN python -m pip install maturin && cd /app/rust && maturin develop --release && python -c "import axiom_zeta_sentinel_core; print('Rust engine OK:', axiom_zeta_sentinel_core.__name__)"
+RUN python -m pip install maturin && cd /app/rust && maturin build --release && python -m pip install target/wheels/axiom_zeta_sentinel_core-*.whl && python -c "import axiom_zeta_sentinel_core; print('Rust engine OK')"
 
 COPY gateway /app/gateway
 COPY README.md /app/README.md
