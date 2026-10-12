@@ -113,7 +113,7 @@ impl DriftEngine {
 }
 
 #[pymodule]
-fn phase_lock_core(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn axiom_zeta_sentinel_core(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<DriftEngine>()?;
     Ok(())
 }
